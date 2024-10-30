@@ -60,12 +60,26 @@ const login = async(req,res)=>{
         }
 
          // tokendata
-       const tokenData = {
-        id: user._id
-       }
-        const token =  await jwt.sign(tokenData,process.env.JWt_SECRET,{expiresIn: "1hr"})
+    //    const tokenData = {
+    //     id: user._id
+    //    }
+    //     const token =  await jwt.sign(tokenData,process.env.JWt_SECRET,{expiresIn: "1hr"})
 
          // storing token in cookie
+    //    return res.status(200).cookie('token',token,{
+    //     httpOnly:true,
+    //     secure: process.env.NODE_ENV === 'production', // set secure cookie in production
+    //     sameSite: 'Strict' // to prevent CSRF attacks
+    //    }).json({
+    //     message: "Login succesfully",
+    //     user,
+    //     success:true
+    //    })
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
+      // storing token in cookie
        return res.status(200).cookie('token',token,{
         httpOnly:true,
         secure: process.env.NODE_ENV === 'production', // set secure cookie in production
@@ -75,6 +89,7 @@ const login = async(req,res)=>{
         user,
         success:true
        })
+
     } catch (error) {
         console.log(error)
     }

@@ -14,10 +14,11 @@ app.use('/files', express.static(path.join(__dirname, 'files')));
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+// CORS configuration
 app.use(cors({
-    orogin: "http://localhost/3000",
-    Credentials: true
-}))
+    origin: "http://localhost:3000", // Specify the frontend URL
+    credentials: true // Allow credentials (cookies)
+}));
 
 //  db connection
 dotenv.config();
